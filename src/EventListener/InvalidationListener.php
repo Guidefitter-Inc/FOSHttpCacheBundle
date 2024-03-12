@@ -30,7 +30,9 @@ use Symfony\Component\HttpKernel\KernelEvents;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 if (Kernel::MAJOR_VERSION >= 5) {
-    class_alias(TerminateEvent::class, 'FOS\HttpCacheBundle\EventListener\InvalidationTerminateEvent');
+    if (!class_exists('FOS\HttpCacheBundle\EventListener\InvalidationTerminateEvent', false)) {
+        class_alias(TerminateEvent::class, 'FOS\HttpCacheBundle\EventListener\InvalidationTerminateEvent');
+    }
 } else {
     class_alias(PostResponseEvent::class, 'FOS\HttpCacheBundle\EventListener\InvalidationTerminateEvent');
 }
